@@ -1,0 +1,39 @@
+/*
+ * Practical 13 : Write a java program to perform simple inheritance.
+ * Save this file as : SimpleInheritance.java
+ * Compile : javac SimpleInheritance.java
+ * Run     : java SimpleInheritance
+ */
+
+// Parent (Super / Base) class
+class Animal {
+    String name = "Animal";
+
+    void eat() {
+        System.out.println("This animal eats food.");
+    }
+}
+
+// Child (Sub / Derived) class inherits Animal using 'extends'
+class Dog extends Animal {
+
+    void bark() {
+        System.out.println("Dog barks: Bhow Bhow!");
+    }
+}
+
+public class SimpleInheritance {
+    public static void main(String[] args) {
+        Dog d = new Dog();      // object of child class
+
+        d.eat();                // inherited method from Animal
+        d.bark();               // own method of Dog
+        System.out.println("Inherited variable name = " + d.name);
+    }
+}
+
+/* Output:
+ * This animal eats food.
+ * Dog barks: Bhow Bhow!
+ * Inherited variable name = Animal
+ */

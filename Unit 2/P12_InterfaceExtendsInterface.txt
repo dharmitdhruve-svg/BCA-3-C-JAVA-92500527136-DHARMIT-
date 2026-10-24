@@ -1,0 +1,41 @@
+/*
+ * Practical 12 : Write a java program to extend one interface into another interface
+ * Save this file as : InterfaceExtendDemo.java
+ * Compile : javac InterfaceExtendDemo.java
+ * Run     : java InterfaceExtendDemo
+ */
+
+// Parent interface
+interface Printable {
+    void print();
+}
+
+// Child interface extends parent interface (interface uses 'extends', not 'implements')
+interface Showable extends Printable {
+    void show();
+}
+
+// Class implementing the child interface must define methods of BOTH interfaces
+class Document implements Showable {
+
+    public void print() {                       // method from Printable
+        System.out.println("Printing the document...");
+    }
+
+    public void show() {                        // method from Showable
+        System.out.println("Showing the document...");
+    }
+}
+
+public class InterfaceExtendDemo {
+    public static void main(String[] args) {
+        Document d = new Document();            // create object of implementing class
+        d.print();                              // call Printable method
+        d.show();                               // call Showable method
+    }
+}
+
+/* Output:
+ * Printing the document...
+ * Showing the document...
+ */

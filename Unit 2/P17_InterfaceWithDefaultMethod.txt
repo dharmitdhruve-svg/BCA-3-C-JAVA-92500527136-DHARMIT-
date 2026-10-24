@@ -1,0 +1,62 @@
+/*
+ * Practical 17 : Write a java program to use interface
+ * (This version shows constants, abstract method, default method and static method)
+ * Save this file as : InterfaceUseDemo.java
+ * Compile : javac InterfaceUseDemo.java
+ * Run     : java InterfaceUseDemo
+ */
+
+interface Payment {
+    String CURRENCY = "INR";                 // constant (public static final)
+
+    void pay(double amount);                 // abstract method
+
+    default void receipt() {                 // default method (Java 8+), has a body
+        System.out.println("Receipt generated. Thank you!");
+    }
+
+    static void info() {                     // static method (Java 8+)
+        System.out.println("Payment interface - currency used: " + CURRENCY);
+    }
+}
+
+// Class 1 implementing Payment
+class CashPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " " + CURRENCY + " by Cash.");
+    }
+}
+
+// Class 2 implementing Payment
+class UpiPayment implements Payment {
+    public void pay(double amount) {
+        System.out.println("Paid " + amount + " " + CURRENCY + " by UPI.");
+    }
+
+    // default method can be overridden if needed
+    public void receipt() {
+        System.out.println("UPI receipt sent to your mobile.");
+    }
+}
+
+public class InterfaceUseDemo {
+    public static void main(String[] args) {
+        Payment.info();                      // static method called using interface name
+
+        Payment p1 = new CashPayment();
+        p1.pay(500);
+        p1.receipt();                        // default method
+
+        Payment p2 = new UpiPayment();
+        p2.pay(1200);
+        p2.receipt();                        // overridden method
+    }
+}
+
+/* Output:
+ * Payment interface - currency used: INR
+ * Paid 500.0 INR by Cash.
+ * Receipt generated. Thank you!
+ * Paid 1200.0 INR by UPI.
+ * UPI receipt sent to your mobile.
+ */

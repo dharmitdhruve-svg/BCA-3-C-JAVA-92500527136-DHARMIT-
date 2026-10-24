@@ -1,0 +1,57 @@
+/*
+ * Practical 14 : Write a java program to use multilevel inheritance.
+ * Save this file as : MultilevelInheritance.java
+ * Compile : javac MultilevelInheritance.java
+ * Run     : java MultilevelInheritance
+ */
+
+// Level 1 : Grandparent class
+class Person {
+    String name;
+
+    void setName(String name) {
+        this.name = name;
+    }
+}
+
+// Level 2 : Person -> Employee
+class Employee extends Person {
+    int empId;
+
+    void setEmpId(int empId) {
+        this.empId = empId;
+    }
+}
+
+// Level 3 : Person -> Employee -> Manager
+class Manager extends Employee {
+    String department;
+
+    void setDepartment(String department) {
+        this.department = department;
+    }
+
+    void display() {
+        // Manager can use members of Employee and Person also
+        System.out.println("Name       : " + name);
+        System.out.println("Employee ID: " + empId);
+        System.out.println("Department : " + department);
+    }
+}
+
+public class MultilevelInheritance {
+    public static void main(String[] args) {
+        Manager m = new Manager();
+
+        m.setName("Dharmit");        // from Person
+        m.setEmpId(101);             // from Employee
+        m.setDepartment("IT");       // from Manager
+        m.display();
+    }
+}
+
+/* Output:
+ * Name       : Dharmit
+ * Employee ID: 101
+ * Department : IT
+ */

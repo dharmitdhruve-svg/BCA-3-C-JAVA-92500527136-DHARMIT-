@@ -1,0 +1,50 @@
+/*
+ * Practical 16 : Write a java program to use Abstract class
+ * Save this file as : AbstractClassDemo.java
+ * Compile : javac AbstractClassDemo.java
+ * Run     : java AbstractClassDemo
+ */
+
+// Abstract class : cannot create its object directly
+abstract class Bank {
+
+    abstract int getRateOfInterest();    // abstract method (no body)
+
+    void showBankInfo() {                // normal (concrete) method
+        System.out.println("Welcome to our bank.");
+    }
+}
+
+// Child class must define all abstract methods of parent
+class SBI extends Bank {
+    int getRateOfInterest() {
+        return 7;
+    }
+}
+
+class ICICI extends Bank {
+    int getRateOfInterest() {
+        return 8;
+    }
+}
+
+public class AbstractClassDemo {
+    public static void main(String[] args) {
+        // Bank b = new Bank();          // ERROR : abstract class can't be instantiated
+
+        Bank b;                          // reference of abstract class is allowed
+
+        b = new SBI();                   // reference points to child object
+        b.showBankInfo();
+        System.out.println("SBI Rate of Interest   : " + b.getRateOfInterest() + "%");
+
+        b = new ICICI();
+        System.out.println("ICICI Rate of Interest : " + b.getRateOfInterest() + "%");
+    }
+}
+
+/* Output:
+ * Welcome to our bank.
+ * SBI Rate of Interest   : 7%
+ * ICICI Rate of Interest : 8%
+ */
