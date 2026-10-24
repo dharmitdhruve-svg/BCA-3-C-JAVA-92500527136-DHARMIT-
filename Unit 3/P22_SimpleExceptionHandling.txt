@@ -1,0 +1,24 @@
+/*
+ * Practical 22 : Write a java program to implement simple exception handling
+ * Save this file as : SimpleException.java
+ * Compile : javac SimpleException.java
+ * Run     : java SimpleException
+ */
+public class SimpleException {
+    public static void main(String[] args) {
+        try {
+            // risky code : array index 5 does not exist
+            int[] arr = {10, 20, 30};
+            System.out.println("Value = " + arr[5]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // handles the error so the program does not crash
+            System.out.println("Exception caught: " + e);
+        }
+        System.out.println("Program continues normally...");
+    }
+}
+
+/* Output:
+ * Exception caught: java.lang.ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 3
+ * Program continues normally...
+ */

@@ -1,0 +1,35 @@
+/*
+ * Practical 38 : Write a java program to use Gregorian calendar to display calendar information
+ * Save this file as : GregorianDemo.java
+ * Compile : javac GregorianDemo.java
+ * Run     : java GregorianDemo
+ */
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+public class GregorianDemo {
+    public static void main(String[] args) {
+        GregorianCalendar gc = new GregorianCalendar();     // current date/time
+
+        System.out.println("Year          : " + gc.get(Calendar.YEAR));
+        System.out.println("Month (0-11)  : " + gc.get(Calendar.MONTH));
+        System.out.println("Day of month  : " + gc.get(Calendar.DAY_OF_MONTH));
+        System.out.println("Hour          : " + gc.get(Calendar.HOUR_OF_DAY));
+        System.out.println("Minute        : " + gc.get(Calendar.MINUTE));
+
+        // isLeapYear() is a special method of GregorianCalendar
+        int year = gc.get(Calendar.YEAR);
+        System.out.println(year + " is leap year? " + gc.isLeapYear(year));
+
+        // check some other years
+        System.out.println("2024 is leap year? " + gc.isLeapYear(2024));
+        System.out.println("2100 is leap year? " + gc.isLeapYear(2100));
+
+        // create a specific date : 15 August 2026 (month is 0-based => 7)
+        GregorianCalendar independence = new GregorianCalendar(2026, 7, 15);
+        System.out.println("Day of week on 15-Aug-2026 (Sunday=1): "
+                           + independence.get(Calendar.DAY_OF_WEEK));
+    }
+}
+
+/* Output: depends on the current date and time */
