@@ -1,0 +1,38 @@
+/*
+ * Practical 40 : Write a java program to create a thread using Runnable class
+ * Save this file as : RunnableDemo.java
+ * Compile : javac RunnableDemo.java
+ * Run     : java RunnableDemo
+ */
+
+// Step 1 : implement the Runnable interface
+class MyTask implements Runnable {
+
+    // Step 2 : define run() method
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Runnable thread running : " + i);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+    }
+}
+
+public class RunnableDemo {
+    public static void main(String[] args) {
+        MyTask task = new MyTask();             // Step 3 : create Runnable object
+        Thread t = new Thread(task);            // Step 4 : pass it to a Thread object
+        t.start();                              // Step 5 : start the thread
+
+        System.out.println("Main thread finished its work.");
+    }
+}
+
+/* Output (order of main line may vary):
+ * Main thread finished its work.
+ * Runnable thread running : 1
+ * ... up to 5
+ */

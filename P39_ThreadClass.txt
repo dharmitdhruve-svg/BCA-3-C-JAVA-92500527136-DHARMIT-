@@ -1,0 +1,37 @@
+/*
+ * Practical 39 : Write a java program to create a thread using Thread Class
+ * Save this file as : ThreadClassDemo.java
+ * Compile : javac ThreadClassDemo.java
+ * Run     : java ThreadClassDemo
+ */
+
+// Step 1 : extend the Thread class
+class MyThread extends Thread {
+
+    // Step 2 : override run() - code written here runs in the new thread
+    @Override
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("MyThread running : " + i);
+            try {
+                Thread.sleep(500);              // pause 500 ms
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+    }
+}
+
+public class ThreadClassDemo {
+    public static void main(String[] args) {
+        MyThread t = new MyThread();            // Step 3 : create thread object
+        t.start();                              // Step 4 : start() calls run() in a new thread
+        System.out.println("Main thread finished its work.");
+    }
+}
+
+/* Output (order of main line may vary):
+ * Main thread finished its work.
+ * MyThread running : 1
+ * ... up to 5
+ */

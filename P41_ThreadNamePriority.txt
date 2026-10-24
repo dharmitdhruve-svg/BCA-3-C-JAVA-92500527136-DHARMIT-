@@ -1,0 +1,49 @@
+/*
+ * Practical 41 : Write a java program to set Thread name and priority & test it.
+ * Priority range : 1 (MIN_PRIORITY) to 10 (MAX_PRIORITY), default is 5 (NORM_PRIORITY)
+ * Save this file as : ThreadNamePriority.java
+ * Compile : javac ThreadNamePriority.java
+ * Run     : java ThreadNamePriority
+ */
+class Worker extends Thread {
+    public void run() {
+        System.out.println("Running : " + getName() + "  | Priority = " + getPriority());
+    }
+}
+
+public class ThreadNamePriority {
+    public static void main(String[] args) {
+        Worker t1 = new Worker();
+        Worker t2 = new Worker();
+        Worker t3 = new Worker();
+
+        // set thread names
+        t1.setName("Low-Thread");
+        t2.setName("Normal-Thread");
+        t3.setName("High-Thread");
+
+        // set thread priorities
+        t1.setPriority(Thread.MIN_PRIORITY);    // 1
+        t2.setPriority(Thread.NORM_PRIORITY);   // 5
+        t3.setPriority(Thread.MAX_PRIORITY);    // 10
+
+        // test : display main thread details too
+        Thread main = Thread.currentThread();
+        System.out.println("Main thread name     : " + main.getName());
+        System.out.println("Main thread priority : " + main.getPriority());
+        System.out.println("-----------------------------");
+
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}
+
+/* Output (order of threads may vary):
+ * Main thread name     : main
+ * Main thread priority : 5
+ * -----------------------------
+ * Running : High-Thread  | Priority = 10
+ * Running : Normal-Thread  | Priority = 5
+ * Running : Low-Thread  | Priority = 1
+ */

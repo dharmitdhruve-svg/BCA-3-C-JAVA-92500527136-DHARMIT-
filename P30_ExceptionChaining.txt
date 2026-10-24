@@ -1,0 +1,30 @@
+/*
+ * Practical 30 : Write a java program to implement Exception Chaining
+ * (One exception is set as the CAUSE of another exception)
+ * Save this file as : ChainingDemo.java
+ * Compile : javac ChainingDemo.java
+ * Run     : java ChainingDemo
+ */
+public class ChainingDemo {
+    public static void main(String[] args) {
+        try {
+            try {
+                // original (root) exception
+                throw new ArithmeticException("Root cause: division problem");
+            } catch (ArithmeticException e) {
+                // create a new exception and attach the old one as its cause
+                RuntimeException re = new RuntimeException("Higher level exception");
+                re.initCause(e);                // chain the exceptions
+                throw re;
+            }
+        } catch (RuntimeException e) {
+            System.out.println("Caught     : " + e.getMessage());
+            System.out.println("Caused by  : " + e.getCause().getMessage());
+        }
+    }
+}
+
+/* Output:
+ * Caught     : Higher level exception
+ * Caused by  : Root cause: division problem
+ */

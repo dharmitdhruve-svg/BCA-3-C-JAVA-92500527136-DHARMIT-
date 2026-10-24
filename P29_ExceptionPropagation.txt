@@ -1,0 +1,41 @@
+/*
+ * Practical 29 : Write a java program to implement Exception Propagation
+ * (An uncaught exception moves DOWN the call stack: method3 -> method2 -> method1 -> main)
+ * Save this file as : PropagationDemo.java
+ * Compile : javac PropagationDemo.java
+ * Run     : java PropagationDemo
+ */
+public class PropagationDemo {
+
+    static void method3() {
+        System.out.println("In method3 : about to divide by zero");
+        int x = 10 / 0;                         // exception occurs here, NOT handled here
+    }
+
+    static void method2() {
+        System.out.println("In method2 : calling method3");
+        method3();                              // exception propagates to method2 (not handled)
+    }
+
+    static void method1() {
+        System.out.println("In method1 : calling method2");
+        try {
+            method2();                          // exception propagates here and is handled
+        } catch (ArithmeticException e) {
+            System.out.println("Exception handled in method1: " + e.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        method1();
+        System.out.println("Main ends normally.");
+    }
+}
+
+/* Output:
+ * In method1 : calling method2
+ * In method2 : calling method3
+ * In method3 : about to divide by zero
+ * Exception handled in method1: / by zero
+ * Main ends normally.
+ */

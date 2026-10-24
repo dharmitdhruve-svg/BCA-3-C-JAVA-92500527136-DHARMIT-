@@ -1,0 +1,59 @@
+/*
+ * Practical 49 : Write a JDBC program to Display Records Into Oracle Table Using Prepared Statement.
+ * Save this file as : PreparedDisplay.java
+ */
+/*
+ * ---------------- COMMON SETUP FOR ALL JDBC PRACTICALS ----------------
+ * 1) Oracle table (run once in SQL*Plus / SQL Developer):
+ *      CREATE TABLE student (id NUMBER PRIMARY KEY, name VARCHAR2(50), marks NUMBER);
+ * 2) Download the Oracle driver ojdbc jar (e.g. ojdbc8.jar) and keep it in the same folder.
+ * 3) Change URL / USER / PASSWORD below as per your Oracle installation.
+ *      URL format : jdbc:oracle:thin:@localhost:1521:xe
+ * 4) Compile : javac CLASSNAME.java
+ *    Run     : java -cp .;ojdbc8.jar CLASSNAME        (Windows)
+ *              java -cp .:ojdbc8.jar CLASSNAME        (Linux / Mac)
+ * -----------------------------------------------------------------------
+ */
+import java.sql.*;
+import java.util.Scanner;
+
+public class PreparedDisplay {
+    public static void main(String[] args) {
+        String url  = "jdbc:oracle:thin:@localhost:1521:xe";
+        String user = "system";
+        String pass = "password";
+
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+
+            // Display ALL records
+            PreparedStatement ps1 = con.prepareStatement("SELECT * FROM student");
+            ResultSet rs = ps1.executeQuery();
+            System.out.println("All students:");
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + "\t" + rs.getString("name") + "\t" + rs.getInt("marks"));
+            }
+
+            // Display ONE record using a parameter
+            Scanner sc = new Scanner(System.in);
+            System.out.print("\nEnter id to search : ");
+            int id = sc.nextInt();
+
+            PreparedStatement ps2 = con.prepareStatement("SELECT * FROM student WHERE id = ?");
+            ps2.setInt(1, id);
+            ResultSet rs2 = ps2.executeQuery();
+            if (rs2.next()) {
+                System.out.println("Found : " + rs2.getInt(1) + "\t" + rs2.getString(2) + "\t" + rs2.getInt(3));
+            } else {
+                System.out.println("No record found.");
+            }
+
+            rs.close(); rs2.close();
+            ps1.close(); ps2.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}

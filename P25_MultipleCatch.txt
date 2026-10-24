@@ -1,0 +1,33 @@
+/*
+ * Practical 25 : Write a java program to use Multiple Catch Block
+ * Save this file as : MultipleCatchDemo.java
+ * Compile : javac MultipleCatchDemo.java
+ * Run     : java MultipleCatchDemo
+ */
+public class MultipleCatchDemo {
+    public static void main(String[] args) {
+        try {
+            int[] arr = new int[3];
+            String s = "abc";
+
+            arr[1] = 10 / 2;                    // fine
+            int n = Integer.parseInt(s);        // NumberFormatException occurs here
+            arr[5] = 100;                       // (not reached)
+        } catch (ArithmeticException e) {
+            System.out.println("Arithmetic problem: " + e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array index problem: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Number format problem: " + e.getMessage());
+        } catch (Exception e) {
+            // general Exception must always be the LAST catch block
+            System.out.println("Some other problem: " + e);
+        }
+        System.out.println("Program ended.");
+    }
+}
+
+/* Output:
+ * Number format problem: For input string: "abc"
+ * Program ended.
+ */

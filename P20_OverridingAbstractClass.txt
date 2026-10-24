@@ -1,0 +1,74 @@
+/*
+ * Practical 20 : Write a java program to perform overriding of abstract class
+ * Save this file as : AbstractOverrideDemo.java
+ * Compile : javac AbstractOverrideDemo.java
+ * Run     : java AbstractOverrideDemo
+ */
+
+// Abstract class with abstract methods and a normal method
+abstract class Employee {
+    String name;
+
+    Employee(String name) {                     // constructor of abstract class
+        this.name = name;
+    }
+
+    abstract double calculateSalary();          // must be overridden by child classes
+
+    void display() {                            // normal method
+        System.out.println("Employee : " + name);
+        System.out.println("Salary   : " + calculateSalary());   // calls overridden method
+    }
+}
+
+// Child class 1 overrides the abstract method
+class FullTimeEmployee extends Employee {
+    double monthlySalary;
+
+    FullTimeEmployee(String name, double monthlySalary) {
+        super(name);                            // call parent constructor
+        this.monthlySalary = monthlySalary;
+    }
+
+    @Override
+    double calculateSalary() {
+        return monthlySalary;
+    }
+}
+
+// Child class 2 overrides the abstract method differently
+class PartTimeEmployee extends Employee {
+    int hours;
+    double ratePerHour;
+
+    PartTimeEmployee(String name, int hours, double ratePerHour) {
+        super(name);
+        this.hours = hours;
+        this.ratePerHour = ratePerHour;
+    }
+
+    @Override
+    double calculateSalary() {
+        return hours * ratePerHour;
+    }
+}
+
+public class AbstractOverrideDemo {
+    public static void main(String[] args) {
+        Employee e1 = new FullTimeEmployee("Rahul", 30000);
+        e1.display();
+
+        System.out.println("-------------------------");
+
+        Employee e2 = new PartTimeEmployee("Amit", 80, 150);
+        e2.display();
+    }
+}
+
+/* Output:
+ * Employee : Rahul
+ * Salary   : 30000.0
+ * -------------------------
+ * Employee : Amit
+ * Salary   : 12000.0
+ */

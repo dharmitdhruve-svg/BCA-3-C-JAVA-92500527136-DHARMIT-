@@ -1,0 +1,57 @@
+/*
+ * Practical 50 : Write a JDBC program to Update and Delete Records Into Oracle Table Using Prepared Statement.
+ * Save this file as : PreparedUpdateDelete.java
+ */
+/*
+ * ---------------- COMMON SETUP FOR ALL JDBC PRACTICALS ----------------
+ * 1) Oracle table (run once in SQL*Plus / SQL Developer):
+ *      CREATE TABLE student (id NUMBER PRIMARY KEY, name VARCHAR2(50), marks NUMBER);
+ * 2) Download the Oracle driver ojdbc jar (e.g. ojdbc8.jar) and keep it in the same folder.
+ * 3) Change URL / USER / PASSWORD below as per your Oracle installation.
+ *      URL format : jdbc:oracle:thin:@localhost:1521:xe
+ * 4) Compile : javac CLASSNAME.java
+ *    Run     : java -cp .;ojdbc8.jar CLASSNAME        (Windows)
+ *              java -cp .:ojdbc8.jar CLASSNAME        (Linux / Mac)
+ * -----------------------------------------------------------------------
+ */
+import java.sql.*;
+import java.util.Scanner;
+
+public class PreparedUpdateDelete {
+    public static void main(String[] args) {
+        String url  = "jdbc:oracle:thin:@localhost:1521:xe";
+        String user = "system";
+        String pass = "password";
+
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            Scanner sc = new Scanner(System.in);
+
+            // ---------- UPDATE using PreparedStatement ----------
+            PreparedStatement upd = con.prepareStatement("UPDATE student SET marks = ? WHERE id = ?");
+            System.out.print("Enter id to update    : ");
+            int uid = sc.nextInt();
+            System.out.print("Enter new marks       : ");
+            int newMarks = sc.nextInt();
+
+            upd.setInt(1, newMarks);        // 1st ? = new marks
+            upd.setInt(2, uid);             // 2nd ? = id
+            System.out.println(upd.executeUpdate() + " record updated.");
+
+            // ---------- DELETE using PreparedStatement ----------
+            PreparedStatement del = con.prepareStatement("DELETE FROM student WHERE id = ?");
+            System.out.print("Enter id to delete    : ");
+            int did = sc.nextInt();
+
+            del.setInt(1, did);
+            System.out.println(del.executeUpdate() + " record deleted.");
+
+            upd.close();
+            del.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}

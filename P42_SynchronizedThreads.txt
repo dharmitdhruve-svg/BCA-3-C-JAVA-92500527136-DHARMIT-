@@ -1,0 +1,54 @@
+/*
+ * Practical 42 : Write a java program to create two threads and make them Synchronized (Thread Safe)
+ * Save this file as : SynchronizedDemo.java
+ * Compile : javac SynchronizedDemo.java
+ * Run     : java SynchronizedDemo
+ */
+
+// Shared resource used by both threads
+class Table {
+
+    // 'synchronized' allows only ONE thread at a time to run this method
+    synchronized void printTable(int n) {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(n + " x " + i + " = " + (n * i));
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+    }
+}
+
+class Thread1 extends Thread {
+    Table t;
+    Thread1(Table t) { this.t = t; }
+    public void run() { t.printTable(5); }      // table of 5
+}
+
+class Thread2 extends Thread {
+    Table t;
+    Thread2(Table t) { this.t = t; }
+    public void run() { t.printTable(10); }     // table of 10
+}
+
+public class SynchronizedDemo {
+    public static void main(String[] args) {
+        Table obj = new Table();                // ONE object shared by both threads
+
+        Thread1 t1 = new Thread1(obj);
+        Thread2 t2 = new Thread2(obj);
+
+        t1.start();
+        t2.start();
+        // Output of one table completes first, then the other (no mixing)
+    }
+}
+
+/* Output (either table first):
+ * 5 x 1 = 5
+ * ... 5 x 5 = 25
+ * 10 x 1 = 10
+ * ... 10 x 5 = 50
+ */

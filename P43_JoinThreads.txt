@@ -1,0 +1,59 @@
+/*
+ * Practical 43 : Write a java program to join two threads which perform loop operations.
+ * join() makes the calling thread WAIT until the other thread finishes.
+ * Save this file as : JoinDemo.java
+ * Compile : javac JoinDemo.java
+ * Run     : java JoinDemo
+ */
+class LoopThread extends Thread {
+    LoopThread(String name) {
+        super(name);                            // set thread name
+    }
+
+    public void run() {
+        for (int i = 1; i <= 3; i++) {
+            System.out.println(getName() + " : count = " + i);
+            try {
+                Thread.sleep(400);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+        System.out.println(getName() + " finished.");
+    }
+}
+
+public class JoinDemo {
+    public static void main(String[] args) {
+        LoopThread t1 = new LoopThread("Thread-A");
+        LoopThread t2 = new LoopThread("Thread-B");
+
+        t1.start();
+        try {
+            t1.join();                          // main waits until Thread-A completes
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+
+        t2.start();                             // Thread-B starts only after Thread-A is done
+        try {
+            t2.join();                          // main waits until Thread-B completes
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+
+        System.out.println("Both threads completed. Main ends.");
+    }
+}
+
+/* Output:
+ * Thread-A : count = 1
+ * Thread-A : count = 2
+ * Thread-A : count = 3
+ * Thread-A finished.
+ * Thread-B : count = 1
+ * Thread-B : count = 2
+ * Thread-B : count = 3
+ * Thread-B finished.
+ * Both threads completed. Main ends.
+ */

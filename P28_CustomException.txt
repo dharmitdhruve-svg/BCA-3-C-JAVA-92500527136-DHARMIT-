@@ -1,0 +1,37 @@
+/*
+ * Practical 28 : Write a java program to implement custom exception
+ * Save this file as : CustomExceptionDemo.java
+ * Compile : javac CustomExceptionDemo.java
+ * Run     : java CustomExceptionDemo
+ */
+
+// User defined exception : extend the Exception class
+class InvalidAgeException extends Exception {
+    InvalidAgeException(String message) {
+        super(message);                         // pass message to parent Exception
+    }
+}
+
+public class CustomExceptionDemo {
+
+    static void validate(int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("Age " + age + " is not valid for registration");
+        }
+        System.out.println("Age " + age + " is valid. Registration done.");
+    }
+
+    public static void main(String[] args) {
+        try {
+            validate(22);
+            validate(12);                       // throws custom exception
+        } catch (InvalidAgeException e) {
+            System.out.println("Caught custom exception: " + e.getMessage());
+        }
+    }
+}
+
+/* Output:
+ * Age 22 is valid. Registration done.
+ * Caught custom exception: Age 12 is not valid for registration
+ */

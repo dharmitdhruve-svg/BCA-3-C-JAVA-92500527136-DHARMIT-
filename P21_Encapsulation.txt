@@ -1,0 +1,68 @@
+/*
+ * Practical 21 : Write a java program to demonstrate encapsulation
+ * Encapsulation = data hiding (private variables) + public getters/setters
+ * Save this file as : EncapsulationDemo.java
+ * Compile : javac EncapsulationDemo.java
+ * Run     : java EncapsulationDemo
+ */
+
+class Student {
+    // private data members : cannot be accessed directly outside the class
+    private int rollNo;
+    private String name;
+    private int marks;
+
+    // Getter methods : to READ private data
+    public int getRollNo() {
+        return rollNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getMarks() {
+        return marks;
+    }
+
+    // Setter methods : to WRITE private data (with validation)
+    public void setRollNo(int rollNo) {
+        this.rollNo = rollNo;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMarks(int marks) {
+        if (marks >= 0 && marks <= 100) {       // validation protects the data
+            this.marks = marks;
+        } else {
+            System.out.println("Invalid marks! Must be between 0 and 100.");
+        }
+    }
+}
+
+public class EncapsulationDemo {
+    public static void main(String[] args) {
+        Student s = new Student();
+
+        // s.marks = 50;                        // ERROR : marks is private
+
+        s.setRollNo(1);
+        s.setName("Dharmit");
+        s.setMarks(85);                         // valid
+        s.setMarks(150);                        // invalid -> rejected by setter
+
+        System.out.println("Roll No : " + s.getRollNo());
+        System.out.println("Name    : " + s.getName());
+        System.out.println("Marks   : " + s.getMarks());
+    }
+}
+
+/* Output:
+ * Invalid marks! Must be between 0 and 100.
+ * Roll No : 1
+ * Name    : Dharmit
+ * Marks   : 85
+ */

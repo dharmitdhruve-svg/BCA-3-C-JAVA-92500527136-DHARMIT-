@@ -1,0 +1,37 @@
+/*
+ * Practical 35 : Write a java program to display date in different format
+ * Save this file as : DateFormatDemo.java
+ * Compile : javac DateFormatDemo.java
+ * Run     : java DateFormatDemo
+ */
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+public class DateFormatDemo {
+    public static void main(String[] args) {
+        Date today = new Date();                    // current date and time
+
+        // Different patterns using SimpleDateFormat
+        SimpleDateFormat f1 = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat f2 = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat f3 = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+        SimpleDateFormat f4 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat f5 = new SimpleDateFormat("hh:mm:ss a");
+
+        System.out.println("Default       : " + today);
+        System.out.println("dd/MM/yyyy    : " + f1.format(today));
+        System.out.println("dd-MMM-yyyy   : " + f2.format(today));
+        System.out.println("Full format   : " + f3.format(today));
+        System.out.println("Date and time : " + f4.format(today));
+        System.out.println("12-hour time  : " + f5.format(today));
+    }
+}
+
+/* Output (example, depends on today's date):
+ * Default       : Sun Oct 25 10:30:15 IST 2026
+ * dd/MM/yyyy    : 25/10/2026
+ * dd-MMM-yyyy   : 25-Oct-2026
+ * Full format   : Sunday, 25 October 2026
+ * Date and time : 2026-10-25 10:30:15
+ * 12-hour time  : 10:30:15 AM
+ */

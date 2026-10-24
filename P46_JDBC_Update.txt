@@ -1,0 +1,40 @@
+/*
+ * Practical 46 : Write a JDBC program to Update data into Oracle Table
+ * Save this file as : JdbcUpdate.java
+ */
+/*
+ * ---------------- COMMON SETUP FOR ALL JDBC PRACTICALS ----------------
+ * 1) Oracle table (run once in SQL*Plus / SQL Developer):
+ *      CREATE TABLE student (id NUMBER PRIMARY KEY, name VARCHAR2(50), marks NUMBER);
+ * 2) Download the Oracle driver ojdbc jar (e.g. ojdbc8.jar) and keep it in the same folder.
+ * 3) Change URL / USER / PASSWORD below as per your Oracle installation.
+ *      URL format : jdbc:oracle:thin:@localhost:1521:xe
+ * 4) Compile : javac CLASSNAME.java
+ *    Run     : java -cp .;ojdbc8.jar CLASSNAME        (Windows)
+ *              java -cp .:ojdbc8.jar CLASSNAME        (Linux / Mac)
+ * -----------------------------------------------------------------------
+ */
+import java.sql.*;
+
+public class JdbcUpdate {
+    public static void main(String[] args) {
+        String url  = "jdbc:oracle:thin:@localhost:1521:xe";
+        String user = "system";
+        String pass = "password";
+
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            Statement stmt = con.createStatement();
+
+            // UPDATE query : change marks of student having id = 1
+            int rows = stmt.executeUpdate("UPDATE student SET marks = 95 WHERE id = 1");
+            System.out.println(rows + " record updated successfully.");
+
+            stmt.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
